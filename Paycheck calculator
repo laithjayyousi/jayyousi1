@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+#include <locale>// to use toupper() transform character
+#include <iomanip>
+using namespace std;
+
+double weeklyPay(double, double,string,int);// function prototype
+
+int main( )
+{    
+  //a function call for each person - no input from the console for part 1
+  cout << fixed << setprecision(2);
+  cout << weeklyPay (47.0, 505.75,"Laith",1) << endl;
+  cout << weeklyPay (45.0, 55.25,"Melvin",1) << endl;
+  cout << weeklyPay (15.0, 65.25,"Susan",2) << endl;
+  cout << weeklyPay (41.0, 14.75,"Mika",1) << endl;
+  cout << weeklyPay (25.0, 15.0,"Eldridge",2) << endl;
+  cout << weeklyPay (55.0, 203.50,"Freedom",1) << endl;
+  cout << weeklyPay (32.5, 100.25,"Tyson",1) << endl;
+  cout << endl;
+  cout << string ("tcc-tr is cool") << endl;
+  cout << string ("I WILL SUCCEED AT C++");
+
+
+  //run your toupper() and tolower() Part 2 code here - Dr_T Note
+  string str1 = "TCC-TR IS COOL"; 
+
+  //delcare a locale loc1; 
+  //run a for loop to tolower() str1 one char at a time
+
+
+  return 0;
+}
+
+
+double weeklyPay(double hours, double rate, string name, int empType)
+{// complete the function definition
+double netPay = 0.0, grossPay = 0.0, taxableWages = 0.0;
+double ss = 0.062, med = 0.0145, sSwages = 0.0, medWages = 0.0;
+double FIT = 0.0, fitTax = 0.0, dental = 0.0, retirement = 0.0;
+double clockHours = 40.0, overtimeRate = 2.0;
+locale loc;
+string status = "";
+string reset = "\x1b[0m";
+string color = "\x1b[" + to_string(43) + ";4m";
+
+
+
+
+//display the name on screen CAP and Color 
+cout << color << endl; //format a new line before each name
+for(int i = 0; i < name.length(); i++ )
+{
+  cout << toupper(name[i], loc);
+}
+cout << reset << endl; //a line after the name
+
+
+
+
+
+
+//Determine status
+/*if(empType == 1)
+{
+  status = "Fulltime";
+}
+else if(empType ==2)
+{
+  status = "Parttime";
+}
+else
+{
+  status = "Error";
+}*/
+status = (empType == 1) ? "Fulltime" : "Parttime"; //set status
+cout << "status: " << status << endl;
+
+FIT = (rate < 15.0) ? 0.12 : 0.15; //set FIT based upon rate
+cout << "FIT Rate: " << FIT << endl;
+dental = (empType == 1) ? 17.00 : 0.0; //deduct for fulltime employees
+retirement = (empType == 1) ? 77.00 : 0.0;// deduct for fulltime employees
+cout << "Dental deduction: $" << dental << " retirement Deduction: $" << retirement << endl;
+
+grossPay = (hours <= clockHours) ? (hours * rate) :
+          ((clockHours * rate ) + ((hours - clockHours) * (overtimeRate * rate)));
+          cout << "Gross Pay: $" << grossPay << endl;
+          taxableWages = grossPay - (dental + retirement);
+          fitTax = taxableWages * FIT; //less pretax deductions
+          cout << "Taxable Wages: $" << taxableWages << endl;
+          sSwages = grossPay * ss;
+          medWages = grossPay * med;
+          cout << "SSDED - $" << sSwages << " MedDed - $" << medWages << endl;
+
+netPay = grossPay - (dental + retirement + fitTax + sSwages + medWages);
+
+cout << "$";
+return netPay;
+
+}
