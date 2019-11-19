@@ -1,0 +1,211 @@
+//Uint_7_Laith_Jayyousi _Repl IDE
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+//Declare the structure
+struct timeOfDay
+{
+  short Hour;
+  short Minute;
+  short second;
+};
+struct appDate
+{
+  short dayOfMonth;
+  short month;
+  int year;
+};
+struct event
+{
+  string eventName;
+  timeOfDay eventTime;
+  appDate eventDate;
+  bool isUrgent;
+
+  //make toString() member function for event
+  string toString()
+  {
+    short dayOfMonth = eventDate.dayOfMonth;
+    short month = eventDate.month;
+    int year = eventDate.year;
+
+    stringstream ss; // a custom style cout
+    ss << month << "/" << dayOfMonth << "/" << year;
+
+    string date = ss.str(); 
+
+    short hour = eventTime.Hour;
+    short minute = eventTime.Minute;
+    short second = eventTime.second;
+
+    stringstream sst; 
+    sst << hour << ":" << minute << ":" << second << ":" << endl;
+
+    string time = sst.str();
+
+
+
+    return ("date = " + date + "\nTime: " + time);
+  }
+
+
+};
+
+void createEvent(timeOfDay &t, appDate &d, event &e); //prototype
+
+
+int main() 
+{
+  //date m/d/y time: hours:minutes:seconds
+  timeOfDay t; //instance of the timeOfDay structure
+  t.Hour = 7;
+  t.Minute = 45;
+  t.second = 22;
+  cout << "\nTime " << endl;
+  cout << t.Hour << ":" << t.Minute << ":" << t.second << ":" << endl;
+
+  appDate d;
+  d.dayOfMonth = 01;
+  d.month = 11;
+  d.year = 1998;
+  cout << "\nDate " << endl;
+  cout << d.month << "/" << d.dayOfMonth << "/" << d.year << endl;
+
+event e;
+e.eventName = "My Birthday";
+int decision = 0;
+string status = "";
+//determine if the event is urgent
+cout << "\nIs the event, " << e.eventName << ", urgent? (1 = y, 2 = No): ";
+cin >> decision;
+if (decision == 1)
+{
+  e.isUrgent = true; //yes and urgent
+  status = "URGENT";
+}
+else if (decision == 2)
+{
+  e.isUrgent = false; //not and urgent evenet
+status = "not urgent";
+}
+else
+{
+  status = "Error";
+}
+cout << "\nEvent Name: " << e.eventName << " Status: " << status << endl;
+
+e.eventDate = d; //put data into e.eventDate using an exisitng d instance
+e.eventTime = t;  //put data into e.eventTime using an exisitng t instance
+
+//print (reprint) the date and time of the event
+//reprint the date
+cout << "\nEvent date: " << endl;
+cout << e.eventDate.month << "/" 
+     << e.eventDate.dayOfMonth << "/"
+     << e.eventDate.year
+     << endl;
+
+
+//reprint the time
+cout << "\nEvent time: " << endl;
+cout << e.eventTime.Hour << ":"
+     << e.eventTime.Minute << ":"
+     << e.eventTime.second
+     << endl;
+
+     //inspired by the excellent mind for Rafael How do i Cout << e?
+    cout << e.toString();
+
+
+    /************************  PART 2  *******************************/
+    cout << "Unit 7, Part 2: Pass Event objects by Refrence &" << endl;
+    // Declare instances of the STRUCT that we need fr this work
+
+    event eMain; 
+    //create a timeOfDay to share with eMain
+    timeOfDay tMain;
+    //create a appDate to share with eMain 
+    appDate dMain;
+    //call a function here called void createEven(tMain &t ,DMain &t ,eMain &t);
+
+   // createEvent(tMain, dMain, eMain); //function call 
+
+  createEvent(tMain, dMain, eMain); //function call 
+
+return 0;
+}
+
+void createEvent(timeOfDay &t, appDate &d, event &e)
+{
+  short h = 0, m = 0, s = 0, mo = 0, day = 0;
+  int y = 0, decision = 0; 
+  string urgent = "", eName = ""; 
+  cout << "\nWelcome to our custom Event Creator " <<endl; 
+
+  //populate time of day t
+  cout << "\nPlease enter in this format h (space) m (space) s (space): ";
+  cin >> h >> m >> s; 
+  t = {h, m, s};  
+  t.Hour = h;
+  t.Minute = m;
+  t.second = s;
+  /*t.Hour = h; //set the time to the value entered by the user
+  t.Minute = m;
+  t.Second = s; 
+ */
+
+
+  //populate appDate d
+  cout << "\nPlease enter in this format day(space) mo (space) y (space): ";
+  cin >> day >> mo >> y; 
+  d = {mo, day ,y}; 
+  d.month = m;
+  d.dayOfMonth = day;
+  d.year = y;
+
+
+
+
+
+  //Set event details 
+  //Populate the event name
+  cout << "\nPlease enter an Event name: ";
+  cin >> eName; 
+
+  //Populate the event urgency 
+cout << "\nIs the event, " << e.eventName << ", urgent? (1 = y, 2 = No): ";
+cin >> decision;
+
+if (decision == 1)
+{
+  e.isUrgent = true; //yes and urgent
+  urgent = "URGENT";
+}
+else if (decision == 2)
+{
+  e.isUrgent = false; //not and urgent evenet
+urgent = "not urgent";
+}
+else
+{
+  urgent = "Error";
+}
+cout << "\nEvent Name: " << eName << " " <<  endl;
+
+  //put dMain into Event eMain
+  e.eventDate = d; 
+  //put tMain in Event eMain
+  e.eventTime = t; 
+  //Print the Event
+  //name
+  //urgency
+  //date  think cout << e.toString() << endl 
+  cout << e.toString() << endl; 
+  //time  
+  //test this and upload your complted code to Unit 7 Assignment
+
+
+}
+ 
